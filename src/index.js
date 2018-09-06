@@ -6,7 +6,7 @@ import ZoomYTransition from './Zoom/ZoomYTransition.vue'
 
 import CollapseTransition from './Collapse/CollapseTransition.vue'
 
-import CollapseFadeTransition from './Collapse/CollapseFadeTransition.vue'
+import CollapseFadeTransition from './CollapseFade/CollapseFadeTransition.vue'
 
 import ScaleTransition from './Scale/ScaleTransition.vue'
 
