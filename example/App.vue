@@ -114,6 +114,10 @@
             options: ['CollapseTransition']
           },
           {
+            label: 'CollapseFade',
+            options: ['CollapseFadeTransition']
+          },
+          {
             label: 'Scale',
             options: ['ScaleTransition']
           },
