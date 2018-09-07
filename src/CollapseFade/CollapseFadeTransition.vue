@@ -9,9 +9,7 @@
              @before-leave="beforeLeave"
              @leave="leave"
              @after-leave="afterLeave"
-             enter-active-class="collapseFadeIn"
-             move-class="collapse-fade-move"
-             leave-active-class="collapseFadeOut">
+             move-class="collapse-fade-move">
     <slot></slot>
   </component>
 </template>
@@ -24,7 +22,7 @@
     methods: {
       transitionStyle(duration = 300) {
         let durationInSeconds = duration / 1000
-        let style = `${durationInSeconds}s height ease-in-out, ${durationInSeconds}s padding-top ease-in-out, ${durationInSeconds}s padding-bottom ease-in-out`
+        let style = `${durationInSeconds}s height ease-in-out, ${durationInSeconds}s padding-top ease-in-out, ${durationInSeconds}s padding-bottom ease-in-out,, ${durationInSeconds}s margin-top ease-in-out, ${durationInSeconds}s margin-bottom ease-in-out`
         return style;
       },
       beforeEnter(el) {
@@ -34,10 +32,14 @@
 
         el.dataset.oldPaddingTop = el.style.paddingTop;
         el.dataset.oldPaddingBottom = el.style.paddingBottom;
+        el.dataset.oldMarginTop = el.style.marginTop;
+        el.dataset.oldMarginBottom = el.style.marginBottom;
 
         el.style.height = '0';
         el.style.paddingTop = 0;
         el.style.paddingBottom = 0;
+        el.style.marginTop = 0;
+        el.style.marginBottom = 0;
         this.setStyles(el)
       },
 
@@ -47,10 +49,14 @@
           el.style.height = el.scrollHeight + 'px';
           el.style.paddingTop = el.dataset.oldPaddingTop;
           el.style.paddingBottom = el.dataset.oldPaddingBottom;
+          el.style.marginTop = el.dataset.oldMarginTop;
+          el.style.marginBottom = el.dataset.oldMarginBottom;
         } else {
           el.style.height = '';
           el.style.paddingTop = el.dataset.oldPaddingTop;
           el.style.paddingBottom = el.dataset.oldPaddingBottom;
+          el.style.marginTop = el.dataset.oldMarginTop;
+          el.style.marginBottom = el.dataset.oldMarginBottom;
         }
 
         el.style.overflow = 'hidden';
@@ -67,6 +73,8 @@
         if (!el.dataset) el.dataset = {};
         el.dataset.oldPaddingTop = el.style.paddingTop;
         el.dataset.oldPaddingBottom = el.style.paddingBottom;
+        el.dataset.oldMarginTop = el.style.marginTop;
+        el.dataset.oldMarginBottom = el.style.marginBottom;
         el.dataset.oldOverflow = el.style.overflow;
 
         el.style.height = el.scrollHeight + 'px';
@@ -82,6 +90,8 @@
           el.style.height = 0;
           el.style.paddingTop = 0;
           el.style.paddingBottom = 0;
+          el.style.marginTop = 0;
+          el.style.marginBottom = 0;
         }
         // necessary for transition-group
         this.setAbsolutePosition(el)
@@ -93,40 +103,13 @@
         el.style.overflow = el.dataset.oldOverflow;
         el.style.paddingTop = el.dataset.oldPaddingTop;
         el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        el.style.marginTop = el.dataset.oldMarginTop;
+        el.style.marginBottom = el.dataset.oldMarginBottom;
       }
     }
   }
 </script>
-
 <style>
-  @keyframes collapseFadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  .collapseFadeIn {
-    animation-name: collapseFadeIn;
-  }
-
-  @keyframes collapseFadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
-
-  .collapseFadeOut {
-    animation-name: collapseFadeOut;
-  }
-
   .collapse-fade-move {
     transition: transform .3s ease-in-out;
   }
