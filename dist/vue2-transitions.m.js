@@ -231,7 +231,7 @@ var CollapseTransition = { render: function () {
       if ( duration === void 0 ) duration = 300;
 
       var durationInSeconds = duration / 1000;
-      var style = durationInSeconds + "s height ease-in-out, " + durationInSeconds + "s padding-top ease-in-out, " + durationInSeconds + "s padding-bottom ease-in-out";
+      var style = durationInSeconds + "s height ease-in-out, " + durationInSeconds + "s padding-top ease-in-out, " + durationInSeconds + "s padding-bottom ease-in-out, " + durationInSeconds + "s margin-top ease-in-out, " + durationInSeconds + "s margin-bottom ease-in-out";
       return style;
     },
     beforeEnter: function beforeEnter(el) {
@@ -241,10 +241,14 @@ var CollapseTransition = { render: function () {
 
       el.dataset.oldPaddingTop = el.style.paddingTop;
       el.dataset.oldPaddingBottom = el.style.paddingBottom;
+      el.dataset.oldMarginTop = el.style.marginTop;
+      el.dataset.oldMarginBottom = el.style.marginBottom;
 
       el.style.height = '0';
       el.style.paddingTop = 0;
       el.style.paddingBottom = 0;
+      el.style.marginTop = 0;
+      el.style.marginBottom = 0;
       this.setStyles(el);
     },
 
@@ -254,10 +258,14 @@ var CollapseTransition = { render: function () {
         el.style.height = el.scrollHeight + 'px';
         el.style.paddingTop = el.dataset.oldPaddingTop;
         el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        el.style.marginTop = el.dataset.oldMarginTop;
+        el.style.marginBottom = el.dataset.oldMarginBottom;
       } else {
         el.style.height = '';
         el.style.paddingTop = el.dataset.oldPaddingTop;
         el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        el.style.marginTop = el.dataset.oldMarginTop;
+        el.style.marginBottom = el.dataset.oldMarginBottom;
       }
 
       el.style.overflow = 'hidden';
@@ -274,6 +282,8 @@ var CollapseTransition = { render: function () {
       if (!el.dataset) { el.dataset = {}; }
       el.dataset.oldPaddingTop = el.style.paddingTop;
       el.dataset.oldPaddingBottom = el.style.paddingBottom;
+      el.dataset.oldMarginTop = el.style.marginTop;
+      el.dataset.oldMarginBottom = el.style.marginBottom;
       el.dataset.oldOverflow = el.style.overflow;
 
       el.style.height = el.scrollHeight + 'px';
@@ -289,6 +299,8 @@ var CollapseTransition = { render: function () {
         el.style.height = 0;
         el.style.paddingTop = 0;
         el.style.paddingBottom = 0;
+        el.style.marginTop = 0;
+        el.style.marginBottom = 0;
       }
       // necessary for transition-group
       this.setAbsolutePosition(el);
@@ -300,6 +312,8 @@ var CollapseTransition = { render: function () {
       el.style.overflow = el.dataset.oldOverflow;
       el.style.paddingTop = el.dataset.oldPaddingTop;
       el.style.paddingBottom = el.dataset.oldPaddingBottom;
+      el.style.marginTop = el.dataset.oldMarginTop;
+      el.style.marginBottom = el.dataset.oldMarginBottom;
     }
   }
 };
@@ -308,7 +322,7 @@ var CollapseTransition = { render: function () {
   if (typeof document !== 'undefined') {
     var head = document.head || document.getElementsByTagName('head')[0],
         style = document.createElement('style'),
-        css = " @keyframes collapseFadeIn { from { opacity: 0; } to { opacity: 1; } } .collapseFadeIn { animation-name: collapseFadeIn; } @keyframes collapseFadeOut { from { opacity: 1; } to { opacity: 0; } } .collapseFadeOut { animation-name: collapseFadeOut; } .collapse-fade-move { transition: transform .3s ease-in-out; } ";style.type = 'text/css';if (style.styleSheet) {
+        css = " .collapse-fade-move { transition: transform .3s ease-in-out; } ";style.type = 'text/css';if (style.styleSheet) {
       style.styleSheet.cssText = css;
     } else {
       style.appendChild(document.createTextNode(css));
@@ -317,7 +331,7 @@ var CollapseTransition = { render: function () {
 })();
 
 var CollapseFadeTransition = { render: function () {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c(_vm.componentType, _vm._g(_vm._b({ tag: "component", attrs: { "tag": _vm.tag, "enter-active-class": "collapseFadeIn", "move-class": "collapse-fade-move", "leave-active-class": "collapseFadeOut" }, on: { "before-enter": _vm.beforeEnter, "after-enter": _vm.afterEnter, "enter": _vm.enter, "before-leave": _vm.beforeLeave, "leave": _vm.leave, "after-leave": _vm.afterLeave } }, 'component', _vm.$attrs, false), _vm.$listeners), [_vm._t("default")], 2);
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c(_vm.componentType, _vm._g(_vm._b({ tag: "component", attrs: { "tag": _vm.tag, "move-class": "collapse-fade-move" }, on: { "before-enter": _vm.beforeEnter, "after-enter": _vm.afterEnter, "enter": _vm.enter, "before-leave": _vm.beforeLeave, "leave": _vm.leave, "after-leave": _vm.afterLeave } }, 'component', _vm.$attrs, false), _vm.$listeners), [_vm._t("default")], 2);
   }, staticRenderFns: [],
   name: 'collapse-fade-transition',
   mixins: [baseTransition],
@@ -326,7 +340,7 @@ var CollapseFadeTransition = { render: function () {
       if ( duration === void 0 ) duration = 300;
 
       var durationInSeconds = duration / 1000;
-      var style = durationInSeconds + "s height ease-in-out, " + durationInSeconds + "s padding-top ease-in-out, " + durationInSeconds + "s padding-bottom ease-in-out";
+      var style = durationInSeconds + "s height ease-in-out, " + durationInSeconds + "s padding-top ease-in-out, " + durationInSeconds + "s padding-bottom ease-in-out, " + durationInSeconds + "s opacity ease-in-out, " + durationInSeconds + "s margin-top ease-in-out, " + durationInSeconds + "s margin-bottom ease-in-out";
       return style;
     },
     beforeEnter: function beforeEnter(el) {
@@ -336,23 +350,34 @@ var CollapseFadeTransition = { render: function () {
 
       el.dataset.oldPaddingTop = el.style.paddingTop;
       el.dataset.oldPaddingBottom = el.style.paddingBottom;
+      el.dataset.oldMarginTop = el.style.marginTop;
+      el.dataset.oldMarginBottom = el.style.marginBottom;
 
+      el.style.opacity = 0;
       el.style.height = '0';
       el.style.paddingTop = 0;
       el.style.paddingBottom = 0;
+      el.style.marginTop = 0;
+      el.style.marginBottom = 0;
       this.setStyles(el);
     },
 
     enter: function enter(el) {
       el.dataset.oldOverflow = el.style.overflow;
       if (el.scrollHeight !== 0) {
+        el.style.opacity = 1;
         el.style.height = el.scrollHeight + 'px';
         el.style.paddingTop = el.dataset.oldPaddingTop;
         el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        el.style.marginTop = el.dataset.oldMarginTop;
+        el.style.marginBottom = el.dataset.oldMarginBottom;
       } else {
+        el.style.opacity = 1;
         el.style.height = '';
         el.style.paddingTop = el.dataset.oldPaddingTop;
         el.style.paddingBottom = el.dataset.oldPaddingBottom;
+        el.style.marginTop = el.dataset.oldMarginTop;
+        el.style.marginBottom = el.dataset.oldMarginBottom;
       }
 
       el.style.overflow = 'hidden';
@@ -361,6 +386,7 @@ var CollapseFadeTransition = { render: function () {
     afterEnter: function afterEnter(el) {
       // for safari: remove class then reset height is necessary
       el.style.transition = '';
+      el.style.opacity = '';
       el.style.height = '';
       el.style.overflow = el.dataset.oldOverflow;
     },
@@ -369,8 +395,11 @@ var CollapseFadeTransition = { render: function () {
       if (!el.dataset) { el.dataset = {}; }
       el.dataset.oldPaddingTop = el.style.paddingTop;
       el.dataset.oldPaddingBottom = el.style.paddingBottom;
+      el.dataset.oldMarginTop = el.style.marginTop;
+      el.dataset.oldMarginBottom = el.style.marginBottom;
       el.dataset.oldOverflow = el.style.overflow;
 
+      el.style.opacity = 1;
       el.style.height = el.scrollHeight + 'px';
       el.style.overflow = 'hidden';
       this.setStyles(el);
@@ -381,9 +410,12 @@ var CollapseFadeTransition = { render: function () {
       if (el.scrollHeight !== 0) {
         // for safari: add class after set height, or it will jump to zero height suddenly, weired
         el.style.transition = this.transitionStyle(leaveDuration);
+        el.style.opacity = 0;
         el.style.height = 0;
         el.style.paddingTop = 0;
         el.style.paddingBottom = 0;
+        el.style.marginTop = 0;
+        el.style.marginBottom = 0;
       }
       // necessary for transition-group
       this.setAbsolutePosition(el);
@@ -391,10 +423,13 @@ var CollapseFadeTransition = { render: function () {
 
     afterLeave: function afterLeave(el) {
       el.style.transition = '';
+      el.style.opacity = '';
       el.style.height = '';
       el.style.overflow = el.dataset.oldOverflow;
       el.style.paddingTop = el.dataset.oldPaddingTop;
       el.style.paddingBottom = el.dataset.oldPaddingBottom;
+      el.style.marginTop = el.dataset.oldMarginTop;
+      el.style.marginBottom = el.dataset.oldMarginBottom;
     }
   }
 };
