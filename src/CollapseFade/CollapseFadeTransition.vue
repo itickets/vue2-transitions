@@ -22,7 +22,7 @@
     methods: {
       transitionStyle(duration = 300) {
         let durationInSeconds = duration / 1000
-        let style = `${durationInSeconds}s height ease-in-out, ${durationInSeconds}s padding-top ease-in-out, ${durationInSeconds}s padding-bottom ease-in-out,, ${durationInSeconds}s margin-top ease-in-out, ${durationInSeconds}s margin-bottom ease-in-out`
+        let style = `${durationInSeconds}s height ease-in-out, ${durationInSeconds}s padding-top ease-in-out, ${durationInSeconds}s padding-bottom ease-in-out, ${durationInSeconds}s opacity ease-in-out, ${durationInSeconds}s margin-top ease-in-out, ${durationInSeconds}s margin-bottom ease-in-out`
         return style;
       },
       beforeEnter(el) {
@@ -35,6 +35,7 @@
         el.dataset.oldMarginTop = el.style.marginTop;
         el.dataset.oldMarginBottom = el.style.marginBottom;
 
+        el.style.opacity = 0;
         el.style.height = '0';
         el.style.paddingTop = 0;
         el.style.paddingBottom = 0;
@@ -46,12 +47,14 @@
       enter(el) {
         el.dataset.oldOverflow = el.style.overflow;
         if (el.scrollHeight !== 0) {
+          el.style.opacity = 1;
           el.style.height = el.scrollHeight + 'px';
           el.style.paddingTop = el.dataset.oldPaddingTop;
           el.style.paddingBottom = el.dataset.oldPaddingBottom;
           el.style.marginTop = el.dataset.oldMarginTop;
           el.style.marginBottom = el.dataset.oldMarginBottom;
         } else {
+          el.style.opacity = 1;
           el.style.height = '';
           el.style.paddingTop = el.dataset.oldPaddingTop;
           el.style.paddingBottom = el.dataset.oldPaddingBottom;
@@ -65,6 +68,7 @@
       afterEnter(el) {
         // for safari: remove class then reset height is necessary
         el.style.transition = ''
+        el.style.opacity = ''
         el.style.height = '';
         el.style.overflow = el.dataset.oldOverflow;
       },
@@ -77,6 +81,7 @@
         el.dataset.oldMarginBottom = el.style.marginBottom;
         el.dataset.oldOverflow = el.style.overflow;
 
+        el.style.opacity = 1;
         el.style.height = el.scrollHeight + 'px';
         el.style.overflow = 'hidden';
         this.setStyles(el)
@@ -87,6 +92,7 @@
         if (el.scrollHeight !== 0) {
           // for safari: add class after set height, or it will jump to zero height suddenly, weired
           el.style.transition = this.transitionStyle(leaveDuration)
+          el.style.opacity = 0;
           el.style.height = 0;
           el.style.paddingTop = 0;
           el.style.paddingBottom = 0;
@@ -99,6 +105,7 @@
 
       afterLeave(el) {
         el.style.transition = ''
+        el.style.opacity = ''
         el.style.height = '';
         el.style.overflow = el.dataset.oldOverflow;
         el.style.paddingTop = el.dataset.oldPaddingTop;
